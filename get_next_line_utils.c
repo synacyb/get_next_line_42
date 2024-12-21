@@ -1,5 +1,68 @@
 #include "get_next_line.h"
 
+char	*ft_strdup(const char *str)
+{
+	size_t	i;
+	char	*ptr;
+	size_t	len;
+
+	i = 0;
+	len = ft_strlen(str);
+	ptr = malloc((len + 1) * sizeof(char));
+	if (!ptr)
+		return (NULL);
+	while (i < len)
+	{
+		ptr[i] = str[i];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
+}
+size_t	ft_strlen(const char *str)
+{
+	size_t	count;
+
+	count = 0;
+	while (*str != '\0')
+	{
+		count++;
+		str++;
+	}
+	return (count);
+}
+char	*ft_strchr(const char *s, int c)
+{
+	while (*s != '\0')
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if ((char)c == '\0')
+		return ((char *)s);
+	return (NULL);
+}
+void	*ft_memcpy(void *dest, const void *src, size_t size)
+{
+	size_t				count;
+	unsigned char		*ptr1;
+	unsigned char		*ptr2;
+
+	ptr1 = (unsigned char *)dest;
+	ptr2 = (unsigned char *)src;
+	count = 0;
+	if (ptr1 == NULL && ptr2 == NULL)
+		return (NULL);
+	while (count < size)
+	{
+		*ptr1 = *ptr2;
+		ptr1++;
+		ptr2++;
+		count++;
+	}
+	return (dest);
+}
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	len1;
