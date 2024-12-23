@@ -2,13 +2,12 @@
 
 int main()
 {
-	int fd = open("text.text",O_RDONLY);
-
-	printf("%s",  get_next_line(fd));
-	// printf("%s",  get_next_line(fd));
-	// printf("%s",  get_next_line(fd));
-	// printf("%s",  get_next_line(fd));
-	// printf("%s",  get_next_line(fd));
-	// printf("%s",  get_next_line(fd));
+	int fd = open("text.txt",O_RDONLY);
+	char *str = NULL;
+	while((str = get_next_line(fd)))
+	{
+		printf("%s",str);
+		free(str);
+	}
 	close(fd);
 }

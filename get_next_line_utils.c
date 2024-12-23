@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ayadouay <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/23 14:47:26 by ayadouay          #+#    #+#             */
+/*   Updated: 2024/12/23 14:47:30 by ayadouay         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*ft_strdup(const char *str)
@@ -19,6 +31,7 @@ char	*ft_strdup(const char *str)
 	ptr[i] = '\0';
 	return (ptr);
 }
+
 size_t	ft_strlen(const char *str)
 {
 	size_t	count;
@@ -31,6 +44,7 @@ size_t	ft_strlen(const char *str)
 	}
 	return (count);
 }
+
 char	*ft_strchr(const char *s, int c)
 {
 	while (*s != '\0')
@@ -43,6 +57,7 @@ char	*ft_strchr(const char *s, int c)
 		return ((char *)s);
 	return (NULL);
 }
+
 void	*ft_memcpy(void *dest, const void *src, size_t size)
 {
 	size_t				count;
@@ -63,6 +78,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t size)
 	}
 	return (dest);
 }
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	len1;

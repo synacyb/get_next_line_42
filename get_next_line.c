@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ayadouay <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/23 14:42:52 by ayadouay          #+#    #+#             */
+/*   Updated: 2024/12/23 14:42:55 by ayadouay         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
@@ -28,53 +40,69 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	str = str - i;
 	return (str);
 }
-char *result(int fd, char **str, char *buffer)
-{
-    int n;
-    char *tmp;
-    while (1)
-    {
-        n = read(fd ,buffer, BUFFER_SIZE);
-        if (n <= 0)
-            return NULL;
-        if (!(*str))
-            (*str) = ft_strdup("");
-        tmp = (*str);
-        buffer[n] = '\0';
-        (*str) = ft_strjoin((*str),buffer);
-        free(tmp);
-        tmp = NULL;
-        if (ft_strchr(buffer, '\n'))
-            break;
-    }
-    return (*str);
-}
-void    find_next_line(char **str)
-{
-    int i;
-    int len;
-    char *tmp;
 
-    i = 0;
-    tmp = *str;
-    len = ft_strlen(*str);
-    while (tmp[i] && tmp[i] != '\n')
-        i++;
-    if ((tmp[i]) == '\n')
-        *str = ft_substr((*str), i + 1, len - i);
-    // printf("(((((%s))))\n",*str);
-    // if ((tmp[i]) == '\0')
-}
-char *get_next_line(int fd)
+char	*find_line(int fd, char *str, char *buffer)
 {
-    static char *str;
-    char *buffer;
-    char *line; 
+	ssize_t		n;
+	char		*tmp;
+	char		*check_new_line;
 
-    buffer = malloc(BUFFER_SIZE + 1);
-    if (!buffer)
-        return (NULL);
-    line = result(fd, &str, buffer);
-    // find_next_line(&str);
-    return line;
+	while (1)
+	{
+		n = read(fd, buffer, BUFFER_SIZE);
+		if (n == -1)
+			return (NULL);
+		else if (n == 0)
+			break ;
+		buffer[n] = '\0';
+		if (!(str))
+			str = ft_strdup("");
+		tmp = str;
+		str = ft_strjoin(tmp, buffer);
+		free(tmp);
+		check_new_line = ft_strchr(buffer, '\n');
+		if (check_new_line)
+			break ;
+	}
+	return (str);
+}
+
+char	*find_next_line(char *str)
+{
+	char	*tmp;
+	int		len;
+	int		i;
+
+	i = 0;
+	len = 0;
+	while (str[len] != '\0')
+		len++;
+	while (str[i] != '\n' && str[i] != '\0')
+		i++;
+	if (str[i] == '\0')
+		return (NULL);
+	tmp = ft_substr(str, i + 1, len - i);
+	str[i + 1] = '\0';
+	return (tmp);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*save_str;
+	char		*buffer;
+	char		*line;
+
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
+		return (NULL);
+	line = find_line(fd, save_str, buffer);
+	free(buffer);
+	if (!line)
+	{
+		free(save_str);
+		save_str = NULL;
+		return (NULL);
+	}
+	save_str = find_next_line(line);
+	return (line);
 }

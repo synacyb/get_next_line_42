@@ -2,7 +2,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 100
+#  define BUFFER_SIZE 3
 # endif
 
 # include <fcntl.h>
@@ -11,7 +11,7 @@
 # include <unistd.h>
 
 //all prototype !!
-char *result(int fd,char **str, char *buffer);
+char	*find_line(int fd, char *str, char *buffer);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *str);
 char	*get_next_line(int fd);
