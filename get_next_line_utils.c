@@ -78,7 +78,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t size)
 	}
 	return (dest);
 }
-
+		
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	len1;

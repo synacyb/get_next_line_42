@@ -60,6 +60,7 @@ char	*find_line(int fd, char *str, char *buffer)
 		tmp = str;
 		str = ft_strjoin(tmp, buffer);
 		free(tmp);
+		tmp = NULL;
 		check_new_line = ft_strchr(buffer, '\n');
 		if (check_new_line)
 			break ;
@@ -82,6 +83,11 @@ char	*find_next_line(char *str)
 	if (str[i] == '\0')
 		return (NULL);
 	tmp = ft_substr(str, i + 1, len - i);
+	if (tmp[0] == '\0')
+	{
+		free(tmp);
+		tmp = NULL;
+	}
 	str[i + 1] = '\0';
 	return (tmp);
 }
@@ -92,17 +98,20 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	char		*line;
 
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buffer)
-		return (NULL);
-	line = find_line(fd, save_str, buffer);
-	free(buffer);
-	if (!line)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
 		free(save_str);
 		save_str = NULL;
 		return (NULL);
 	}
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
+		return (NULL);
+	line = find_line(fd, save_str, buffer);
+	free(buffer);
+	buffer = NULL;
+	if (!line)
+		return (NULL);
 	save_str = find_next_line(line);
 	return (line);
 }
