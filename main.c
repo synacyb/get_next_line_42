@@ -4,11 +4,13 @@ int main()
 {
 	int fd = open("text.txt",O_RDONLY);
 	char *str = NULL;
-	str = get_next_line(fd);
-	printf("%s", str);
-	free(str);
-	str = get_next_line(fd);
-	printf("%s", str);
-	free(str);
+	while (1)
+	{
+		str = get_next_line(fd);
+		if (!str)
+			break;
+		printf("%s", str);
+		free(str);
+	}
 	close(fd);
 }

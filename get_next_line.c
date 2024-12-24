@@ -55,7 +55,7 @@ char	*find_line(int fd, char *str, char *buffer)
 		else if (n == 0)
 			break ;
 		buffer[n] = '\0';
-		if (!(str))
+		if (!str)
 			str = ft_strdup("");
 		tmp = str;
 		str = ft_strjoin(tmp, buffer);
